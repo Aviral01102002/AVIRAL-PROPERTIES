@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVIRAL PROPERTIES</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">A</div>
+    <div class="company">
+        <h2>AVIRAL PROPERTIES</h2>
+        <p>Property Management Dashboard</p>
+    </div>
+    <button class="exit" onclick="exitDashboard()">Exit</button>
+</header>
+
+<main class="container">
+
+    <section class="welcome">
+        <div>
+            <p class="label">PROPERTY MANAGEMENT</p>
+            <h1 id="pageTitle">Dashboard</h1>
+            <p class="subtitle">Manage plots and properties in one place.</p>
+        </div>
+        <div class="total">
+            <h2 id="totalCount">0</h2>
+            <p>Total Properties</p>
+        </div>
+    </section>
+
+    <section id="dashboard" class="dashboard">
+
+        <button class="card" onclick="showPanel('addPanel')">
+            <span class="symbol">＋</span>
+            <b>1. Add Property</b>
+            <small>Add plot, size, owner and contact</small>
+        </button>
+
+        <button class="card" onclick="viewProperties()">
+            <span class="symbol">▦</span>
+            <b>2. View All Properties</b>
+            <small>View photos and addresses</small>
+        </button>
+
+        <button class="card" onclick="showPanel('searchPanel')">
+            <span class="symbol">⌕</span>
+            <b>3. Search Property</b>
+            <small>Find by plot or location</small>
+        </button>
+
+        <button class="card" onclick="showPanel('updatePanel')">
+            <span class="symbol">✎</span>
+            <b>4. Update Property</b>
+            <small>Edit plot size and details</small>
+        </button>
+
+        <button class="card" onclick="showPanel('deletePanel')">
+            <span class="symbol">⌫</span>
+            <b>5. Delete Property</b>
+            <small>Delete one or all records</small>
+        </button>
+
+        <button class="card" onclick="exitDashboard()">
+            <span class="symbol red">⏻</span>
+            <b>6. Exit</b>
+            <small>Close dashboard screen</small>
+        </button>
+
+    </section>
+
+    <section id="addPanel" class="panel hidden">
+        <h2>Add New Property</h2>
+
+        <form id="addForm" class="form-grid">
+            <label>Plot Name / Number
+                <input name="plot" required placeholder="Plot A-101">
+            </label>
+
+            <label>Property Size
+                <input name="size" required placeholder="200 sq. yards">
+            </label>
+
+            <label>Owner Name
+                <input name="owner" required placeholder="Owner name">
+            </label>
+
+            <label>Phone Number
+                <input name="phone" required type="tel" placeholder="Phone number">
+            </label>
+
+            <label>Location
+                <input name="location" required placeholder="Lucknow">
+            </label>
+
+            <label>Property Type
+                <select name="type" required>
+                    <option value="">Select type</option>
+                    <option>Residential</option>
+                    <option>Commercial</option>
+                    <option>Agricultural</option>
+                    <option>Industrial</option>
+                </select>
+            </label>
+
+            <label>Price (₹)
+                <input name="price" required type="number" min="0" placeholder="Enter price">
+            </label>
+
+            <label>Property Photo
+                <input name="photo" type="file" accept="image/*">
+            </label>
+
+            <label class="full">Full Address
+                <textarea name="address" required placeholder="Complete address"></textarea>
+            </label>
+
+            <div class="full actions">
+                <button class="primary" type="submit">Save Property</button>
+                <button class="secondary" type="button" onclick="goHome()">Back</button>
+            </div>
+        </form>
+    </section>
+
+    <section id="viewPanel" class="panel hidden">
+        <div class="panel-heading">
+            <h2>All Properties</h2>
+            <button class="secondary" onclick="goHome()">Back</button>
+        </div>
+        <div id="propertyList" class="property-grid"></div>
+    </section>
+
+    <section id="searchPanel" class="panel hidden">
+        <h2>Search Property</h2>
+        <input id="searchInput" placeholder="Search by plot, owner, phone or location">
+        <div id="searchResults" class="property-grid"></div>
+        <button class="secondary" onclick="goHome()">Back</button>
+    </section>
+
+    <section id="updatePanel" class="panel hidden">
+        <h2>Update Property</h2>
+        <label>Select Property
+            <select id="updateSelect">
+                <option value="">Select property</option>
+            </select>
+        </label>
+
+        <form id="updateForm" class="form-grid hidden">
+            <label>Plot Name / Number
+                <input name="plot" required>
+            </label>
+            <label>Property Size
+                <input name="size" required>
+            </label>
+            <label>Owner Name
+                <input name="owner" required>
+            </label>
+            <label>Phone Number
+                <input name="phone" required>
+            </label>
+            <label>Location
+                <input name="location" required>
+            </label>
+            <label>Property Type
+                <select name="type" required>
+                    <option>Residential</option>
+                    <option>Commercial</option>
+                    <option>Agricultural</option>
+                    <option>Industrial</option>
+                </select>
+            </label>
+            <label>Price (₹)
+                <input name="price" type="number" min="0" required>
+            </label>
+            <label>Change Photo (optional)
+                <input name="photo" type="file" accept="image/*">
+            </label>
+            <label class="full">Full Address
+                <textarea name="address" required></textarea>
+            </label>
+            <div class="full actions">
+                <button class="primary" type="submit">Update Property</button>
+            </div>
+        </form>
+
+        <button class="secondary back-button" onclick="goHome()">Back to Dashboard</button>
+    </section>
+
+    <section id="deletePanel" class="panel hidden">
+        <h2>Delete Property</h2>
+        <label>Select Property
+            <select id="deleteSelect">
+                <option value="">Select property</option>
+            </select>
+        </label>
+
+        <div class="actions">
+            <button class="danger" onclick="deleteSelected()">Delete Selected</button>
+            <button class="danger" onclick="deleteAll()">Delete All Properties</button>
+            <button class="secondary" onclick="goHome()">Back</button>
+        </div>
+    </section>
+
+</main>
+
+<footer>© AVIRAL PROPERTIES · Saved in this browser</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
